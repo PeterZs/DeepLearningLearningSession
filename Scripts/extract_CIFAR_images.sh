@@ -1,0 +1,1 @@
+./CifarImageExtraction --input_filename=/home/chenliu/Projects/DeepLearningToyExamples/caffe/data/cifar10/data_batch_1.bin --output_path=/home/chenliu/Projects/DeepLearningToyExamples/caffe/data/cifar10/images --num_images=10000 

@@ -1,0 +1,2 @@
+./Differentiator --list_filename_1="/home/chenliu/Projects/DeepLearningToyExamples/caffe/data/cifar10/images/list.txt" --output_path="/home/chenliu/Projects/DeepLearningToyExamples/DayAndNight/Data/"
+./WritePairs --image_path_1="/home/chenliu/Projects/DeepLearningToyExamples/DayAndNight/Data/day" --image_path_2="/home/chenliu/Projects/DeepLearningToyExamples/DayAndNight/Data/night" --output_path="/home/chenliu/Projects/DeepLearningToyExamples/DayAndNight/Data/" --num_images=12491 --testing_image_ratio=0.05

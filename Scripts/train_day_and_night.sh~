@@ -1,0 +1,2 @@
+caffe/build/tools/caffe train --solver=DayAndNight/Models/labeling_solver.prototxt
+#--weights=Pre-trained/VGG_ILSVRC_16_layers.caffemodel

@@ -1,0 +1,1 @@
+caffe/build/tools/caffe train --solver=Plain/plain_solver.prototxt

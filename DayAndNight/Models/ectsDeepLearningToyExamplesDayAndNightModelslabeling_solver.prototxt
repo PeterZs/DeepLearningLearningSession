@@ -1,0 +1,23 @@
+ regularization_type: "L2"
+         net: "/home/chenliu/Projects/DeepLearningToyExamples/DayAndNight/Models/ectsDeepLearningToyExamplesDayAndNightModelslabeling_train_test.prototxt"
+test_iter: 1
+test_interval: 500
+test_compute_loss: 0
+test_initialization: 1
+base_lr: 0.001000
+display: 50
+average_loss: 1
+max_iter: 3000
+iter_size: 1
+lr_policy: "step"
+gamma: 1
+stepsize: 100
+momentum: 0.900000
+weight_decay: 0.000500
+snapshot: 1000
+snapshot_prefix: "/home/chenliu/Projects/DeepLearningToyExamples/DayAndNight/Models/ectsDeepLearningToyExamplesDayAndNightModelslabeling"
+snapshot_diff: 0
+solver_mode: GPU
+type: "SGD"
+debug_info: 0
+snapshot_after_train: 1

@@ -1,0 +1,1 @@
+./Differentiator --list_filename_1="/home/chenliu/Projects/DeepLearningToyExamples/caffe/data/cifar10/images/list.txt" --output_path="/home/chenliu/Projects/DeepLearningToyExamples/DayAndNight/Data/"
