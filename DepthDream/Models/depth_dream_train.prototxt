@@ -1,28 +1,70 @@
 name: "AlexNet"
 layer {
   name: "data"
-  type: "Input"
+  type: "Data"
   top: "data"
-  input_param { shape: { dim: 1 dim: 3 dim: 227 dim: 227 } }
+  top: "data_dummy"
+  include {
+    phase: TRAIN
+  }
+  data_param {
+    source: "/home/chenliu/Projects/caffe/data/NYU_RGBD/depths_train_lmdb"
+    batch_size: 5
+#    new_width: 224
+#    new_height: 224
+    backend: LMDB
+  }
 }
+
 layer {
-  name: "data_p"
-  type: "Input"
-  top: "data_p"
-  input_param { shape: { dim: 1 dim: 3 dim: 227 dim: 227 } }
+  name: "data"
+  type: "Data"
+  top: "label"
+  top: "label_dummy"
+  include {
+    phase: TRAIN
+  }
+  data_param {
+    source: "/home/chenliu/Projects/caffe/data/NYU_RGBD/image_features_train_lmdb"
+    batch_size: 5
+    backend: LMDB
+  }
 }
+
 layer {
-name: "concat"
-type: "Concat"
-bottom: "data"
-bottom: "data_p"
-top: "concat"
+  name: "data"
+  type: "Data"
+  top: "data"
+  top: "data_dummy"
+  include {
+    phase: TEST
+  }
+  data_param {
+    source: "/home/chenliu/Projects/caffe/data/NYU_RGBD/depths_test_lmdb"
+    batch_size: 5
+    backend: LMDB
+  }
+}
+
+layer {
+  name: "data"
+  type: "Data"
+  top: "label"
+  top: "label_dummy"
+  include {
+    phase: TEST
+  }
+  data_param {
+    source: "/home/chenliu/Projects/caffe/data/NYU_RGBD/image_features_test_lmdb"
+    batch_size: 5
+    backend: LMDB
+  }
 }
 
 layer {
   name: "conv1"
   type: "Convolution"
-  bottom: "concat"
+  bottom: "data"
   top: "conv1"
   param {
     lr_mult: 1
@@ -36,6 +78,14 @@ layer {
     num_output: 96
     kernel_size: 11
     stride: 4
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
   }
 }
 layer {
@@ -84,6 +134,14 @@ layer {
     pad: 2
     kernel_size: 5
     group: 2
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0.1
+    }
   }
 }
 layer {
@@ -131,6 +189,14 @@ layer {
     num_output: 384
     pad: 1
     kernel_size: 3
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
   }
 }
 layer {
@@ -157,6 +223,14 @@ layer {
     pad: 1
     kernel_size: 3
     group: 2
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0.1
+    }
   }
 }
 layer {
@@ -183,6 +257,14 @@ layer {
     pad: 1
     kernel_size: 3
     group: 2
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0.1
+    }
   }
 }
 layer {
@@ -217,6 +299,14 @@ layer {
   }
   inner_product_param {
     num_output: 4096
+    weight_filler {
+      type: "gaussian"
+      std: 0.005
+    }
+    bias_filler {
+      type: "constant"
+      value: 0.1
+    }
   }
 }
 layer {
@@ -249,43 +339,71 @@ layer {
   }
   inner_product_param {
     num_output: 4096
+    weight_filler {
+      type: "gaussian"
+      std: 0.005
+    }
+    bias_filler {
+      type: "constant"
+      value: 0.1
+    }
   }
 }
+# layer {
+#   name: "relu7"
+#   type: "ReLU"
+#   bottom: "fc7"
+#   top: "fc7"
+# }
+# layer {
+#   name: "drop7"
+#   type: "Dropout"
+#   bottom: "fc7"
+#   top: "fc7"
+#   dropout_param {
+#     dropout_ratio: 0.5
+#   }
+# }
+# layer {
+#   name: "fc8"
+#   type: "InnerProduct"
+#   bottom: "fc7"
+#   top: "fc8"
+#   param {
+#     lr_mult: 1
+#     decay_mult: 1
+#   }
+#   param {
+#     lr_mult: 2
+#     decay_mult: 0
+#   }
+#   inner_product_param {
+#     num_output: 3
+#     weight_filler {
+#       type: "gaussian"
+#       std: 0.01
+#     }
+#     bias_filler {
+#       type: "constant"
+#       value: 0
+#     }
+#   }
+# }
+
 layer {
-  name: "relu7"
-  type: "ReLU"
+  name: "accuracy"
+  type: "EuclideanLoss"
   bottom: "fc7"
-  top: "fc7"
+  bottom: "label"
+  top: "accuracy"
+  include {
+#    phase: TEST
+  }
 }
 layer {
-  name: "drop7"
-  type: "Dropout"
+  name: "loss"
+  type: "EuclideanLoss"
   bottom: "fc7"
-  top: "fc7"
-  dropout_param {
-    dropout_ratio: 0.5
-  }
-}
-layer {
-  name: "fc8"
-  type: "InnerProduct"
-  bottom: "fc7"
-  top: "fc8"
-  param {
-    lr_mult: 1
-    decay_mult: 1
-  }
-  param {
-    lr_mult: 2
-    decay_mult: 0
-  }
-  inner_product_param {
-    num_output: 2
-  }
-}
-layer {
-  name: "prob"
-  type: "Softmax"
-  bottom: "fc8"
-  top: "prob"
+  bottom: "label"
+  top: "loss"
 }

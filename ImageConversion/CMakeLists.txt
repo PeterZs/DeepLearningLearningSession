@@ -26,4 +26,7 @@ target_link_libraries(WriteLists ${OpenCV_LIBS} ${GFlags_LIBS} gflags)
 add_executable(WritePairs WritePairs.cpp )
 target_link_libraries(WritePairs ${OpenCV_LIBS} ${GFlags_LIBS} gflags)
 
+add_executable(WriteMultiImageLists WriteMultiImageLists.cpp )
+target_link_libraries(WriteMultiImageLists ${OpenCV_LIBS} ${GFlags_LIBS} gflags)
+
 #add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../base)

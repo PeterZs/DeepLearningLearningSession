@@ -9,13 +9,14 @@ layer {
   }
   transform_param {
 #    mirror: true
-    crop_size: 227
+#    crop_size: 227
 #    mean_file: "data/ilsvrc12/imagenet_mean.binaryproto"
   }
   image_data_param {
     source: "/home/chenliu/Projects/DeepLearningToyExamples/DayAndNight/Data/labeling_train.txt"
     batch_size: 30
-#    backend: LMDB
+    new_width: 227
+    new_height: 227
   }
 }
 layer {
@@ -28,12 +29,14 @@ layer {
   }
   transform_param {
     mirror: false
-    crop_size: 227
+#    crop_size: 227
  #   mean_file: "data/ilsvrc12/imagenet_mean.binaryproto"
   }
   image_data_param {
     source: "/home/chenliu/Projects/DeepLearningToyExamples/DayAndNight/Data/labeling_test.txt"
     batch_size: 5
+    new_width: 227
+    new_height: 227
 #    backend: LMDB
   }
 }

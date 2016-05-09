@@ -1,40 +1,38 @@
 name: "AlexNet"
 layer {
   name: "data"
-  type: "ImageData"
+  type: "MultiImageData"
   top: "data"
   top: "label"
   include {
     phase: TRAIN
   }
   transform_param {
-#    mirror: true
-    crop_size: 227
-#    mean_file: "data/ilsvrc12/imagenet_mean.binaryproto"
   }
-  image_data_param {
-    source: "/home/chenliu/Projects/DeepLearningToyExamples/DayAndNight/Data/train.txt"
+  multi_image_data_param {
+    source: "/home/chenliu/Projects/DeepLearningToyExamples/DayAndNight/Data/siamese_train.txt"
     batch_size: 30
-#    backend: LMDB
+    num_images: 2
+    new_width: 227
+    new_height: 227
   }
 }
 layer {
   name: "data"
-  type: "ImageData"
+  type: "MultiImageData"
   top: "data"
   top: "label"
   include {
     phase: TEST
   }
   transform_param {
-    mirror: false
-    crop_size: 227
- #   mean_file: "data/ilsvrc12/imagenet_mean.binaryproto"
   }
-  image_data_param {
-    source: "/home/chenliu/Projects/DeepLearningToyExamples/DayAndNight/Data/test.txt"
+  multi_image_data_param {
+    source: "/home/chenliu/Projects/DeepLearningToyExamples/DayAndNight/Data/siamese_test.txt"
     batch_size: 5
-#    backend: LMDB
+    num_images: 2
+    new_width: 227
+    new_height: 227
   }
 }
 layer {
